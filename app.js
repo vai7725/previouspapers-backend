@@ -70,6 +70,11 @@ app.get("/api/papers/:university", async (req, res) => {
   const { university } = req.params;
   try {
     const paperData = await paper.find({ university: university });
+    if (paperData.length < 1) {
+      return res
+        .status(200)
+        .json({ msg: `No papers found of university '${university}'.` });
+    }
     res.status(200).json({ paperData });
   } catch (error) {
     console.log(error);
