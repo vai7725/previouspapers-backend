@@ -58,11 +58,7 @@ app.post("/addpaper", (req, res) => {
   const data = new paper(req.body);
   data
     .save()
-    .then(() =>
-      res.status(200).json({
-        msg: "paper stored to db",
-      })
-    )
+    .then(() => res.status(200).json(req.body))
     .catch((err) => console.log(err));
 });
 
