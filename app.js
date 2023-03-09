@@ -33,17 +33,17 @@ app.post("/contact", (req, res) => {
     );
 });
 
-app.post("/adduniversity", (req, res) => {
-  const data = new university(req.body);
-  data
-    .save()
-    .then(() =>
-      res.status(200).json({
-        msg: "University data stored in db",
-      })
-    )
-    .catch((err) => console.log(err));
-});
+// app.post("/adduniversity", (req, res) => {
+//   const data = new university(req.body);
+//   data
+//     .save()
+//     .then(() =>
+//       res.status(200).json({
+//         msg: "University data stored in db",
+//       })
+//     )
+//     .catch((err) => console.log(err));
+// });
 
 app.get("/fetchuniversities", async (req, res) => {
   try {
@@ -54,13 +54,13 @@ app.get("/fetchuniversities", async (req, res) => {
   }
 });
 
-app.post("/addpaper", (req, res) => {
-  const data = new paper(req.body);
-  data
-    .save()
-    .then(() => res.status(200).json(req.body))
-    .catch((err) => console.log(err));
-});
+// app.post("/addpaper", (req, res) => {
+//   const data = new paper(req.body);
+//   data
+//     .save()
+//     .then(() => res.status(200).json(req.body))
+//     .catch((err) => console.log(err));
+// });
 
 app.get("/api/papers/:university", async (req, res) => {
   const { university } = req.params;
