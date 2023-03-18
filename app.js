@@ -1,13 +1,14 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const express = require("express");
-const cors = require("cors");
+const express = require('express');
+const cors = require('cors');
 const app = express();
 
-const connectDB = require("./connect");
-const contact = require("./model/contactSchema");
-const university = require("./model/universitySchema");
-const paper = require("./model/paperSchema");
+const connectDB = require('./connect');
+const contact = require('./model/contactSchema');
+const university = require('./model/universitySchema');
+const paper = require('./model/paperSchema');
+const userHit = require('./model/trafficSchema');
 
 const port = process.env.PORT || 5000;
 
@@ -15,11 +16,11 @@ app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.send("Hello world");
+app.get('/', (req, res) => {
+  res.send('Hello world');
 });
 
-app.post("/contact", (req, res) => {
+app.post('/contact', (req, res) => {
   const data = new contact(req.body);
   data
     .save()
@@ -29,23 +30,23 @@ app.post("/contact", (req, res) => {
       })
     )
     .catch((err) =>
-      res.status(400).json({ msg: "Please provide proper credentials." })
+      res.status(400).json({ msg: 'Please provide proper credentials.' })
     );
 });
 
-app.post("/adduniversity", (req, res) => {
+app.post('/adduniversity', (req, res) => {
   const data = new university(req.body);
   data
     .save()
     .then(() =>
       res.status(200).json({
-        msg: "University data stored in db",
+        msg: 'University data stored in db',
       })
     )
     .catch((err) => console.log(err));
 });
 
-app.get("/fetchuniversities", async (req, res) => {
+app.get('/fetchuniversities', async (req, res) => {
   try {
     const universityData = await university.find({});
     res.status(200).json({ universityData });
@@ -54,7 +55,7 @@ app.get("/fetchuniversities", async (req, res) => {
   }
 });
 
-app.post("/addpaper", (req, res) => {
+app.post('/addpaper', (req, res) => {
   const data = new paper(req.body);
   data
     .save()
@@ -62,7 +63,7 @@ app.post("/addpaper", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-app.get("/api/papers/:university", async (req, res) => {
+app.get('/api/papers/:university', async (req, res) => {
   const { university } = req.params;
   try {
     const paperData = await paper.find({ university: university });
@@ -77,12 +78,40 @@ app.get("/api/papers/:university", async (req, res) => {
   }
 });
 
+app.put('/updatetraffic', async (req, res) => {
+  try {
+    const filter = { userVisit: true };
+    const data = await userHit.findOne({ userVisit: true });
+    const updateData = await userHit.findOneAndUpdate(
+      filter,
+      { ...data, userCount: data.userCount++ },
+      {
+        new: true,
+      }
+    );
+    res.status(200).json({ msg: 'Traffic count updated.' });
+  } catch (error) {
+    res.status(404).json({ msg: error.msg });
+  }
+});
+
+// app.post('/settraffic', (req, res) => {
+//   const data = new userHit({
+//     userCount: 0,
+//     userVisit: true,
+//   });
+//   data
+//     .save()
+//     .then(() => res.status(200).json({ msg: 'Initialized' }))
+//     .catch((err) => console.log(err));
+// });
+
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI);
     app.listen(port, () => console.log(`App started listening at ${port}`));
   } catch (error) {
-    console.log("The error is", error);
+    console.log('The error is', error);
   }
 };
 
