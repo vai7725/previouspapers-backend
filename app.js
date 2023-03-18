@@ -34,13 +34,21 @@ app.post('/contact', (req, res) => {
     );
 });
 
+<<<<<<< HEAD
 // app.post('/adduniversity', (req, res) => {
+=======
+// app.post("/adduniversity", (req, res) => {
+>>>>>>> 3f707fc80e5f2410264f0733b871b0c7dc19053f
 //   const data = new university(req.body);
 //   data
 //     .save()
 //     .then(() =>
 //       res.status(200).json({
+<<<<<<< HEAD
 //         msg: 'University data stored in db',
+=======
+//         msg: "University data stored in db",
+>>>>>>> 3f707fc80e5f2410264f0733b871b0c7dc19053f
 //       })
 //     )
 //     .catch((err) => console.log(err));
@@ -55,7 +63,11 @@ app.get('/fetchuniversities', async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 // app.post('/addpaper', (req, res) => {
+=======
+// app.post("/addpaper", (req, res) => {
+>>>>>>> 3f707fc80e5f2410264f0733b871b0c7dc19053f
 //   const data = new paper(req.body);
 //   data
 //     .save()
