@@ -34,17 +34,17 @@ app.post('/contact', (req, res) => {
     );
 });
 
-app.post('/adduniversity', (req, res) => {
-  const data = new university(req.body);
-  data
-    .save()
-    .then(() =>
-      res.status(200).json({
-        msg: 'University data stored in db',
-      })
-    )
-    .catch((err) => console.log(err));
-});
+// app.post('/adduniversity', (req, res) => {
+//   const data = new university(req.body);
+//   data
+//     .save()
+//     .then(() =>
+//       res.status(200).json({
+//         msg: 'University data stored in db',
+//       })
+//     )
+//     .catch((err) => console.log(err));
+// });
 
 app.get('/fetchuniversities', async (req, res) => {
   try {
@@ -55,13 +55,13 @@ app.get('/fetchuniversities', async (req, res) => {
   }
 });
 
-app.post('/addpaper', (req, res) => {
-  const data = new paper(req.body);
-  data
-    .save()
-    .then(() => res.status(200).json(req.body))
-    .catch((err) => console.log(err));
-});
+// app.post('/addpaper', (req, res) => {
+//   const data = new paper(req.body);
+//   data
+//     .save()
+//     .then(() => res.status(200).json(req.body))
+//     .catch((err) => console.log(err));
+// });
 
 app.get('/api/papers/:university', async (req, res) => {
   const { university } = req.params;
@@ -94,17 +94,6 @@ app.put('/updatetraffic', async (req, res) => {
     res.status(404).json({ msg: error.msg });
   }
 });
-
-// app.post('/settraffic', (req, res) => {
-//   const data = new userHit({
-//     userCount: 0,
-//     userVisit: true,
-//   });
-//   data
-//     .save()
-//     .then(() => res.status(200).json({ msg: 'Initialized' }))
-//     .catch((err) => console.log(err));
-// });
 
 const start = async () => {
   try {
