@@ -34,6 +34,28 @@ app.post('/contact', (req, res) => {
     );
 });
 
+app.get('/contact-info', async (req, res) => {
+  try {
+    const contactInfo = await contact.find({});
+    console.log(contactInfo);
+    res.json({ contactInfo });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.delete('/delete/:infoId', (req, res) => {
+  const { infoId } = req.params;
+  contact.findByIdAndRemove(infoId, (err, deletedItem) => {
+    if (err) {
+      console.log(err);
+      res.status(500).json({ msg: 'Internal server error' });
+    } else {
+      res.status(204).json({ msg: 'Info deleted successfully' });
+    }
+  });
+});
+
 // app.post('/adduniversity', (req, res) => {
 //   const data = new university(req.body);
 //   data
