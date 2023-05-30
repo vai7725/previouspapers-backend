@@ -263,7 +263,7 @@ const getUser = async (req, res) => {
     User.findOne({ _id: userID })
       .then((user) => {
         if (!user) {
-          res.status(404).json({ err: 'No user found...' });
+          return res.status(404).json({ err: 'No user found...' });
         }
         const { password, ...rest } = Object.assign({}, user.toJSON());
         return res.status(200).json({ rest });
